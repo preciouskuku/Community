@@ -14,6 +14,7 @@ export default function RegisterPage() {
   const router = useRouter()
   const { register: registerUser, isLoading } = useAuthStore()
   const { addToast } = useUIStore()
+
   const {
     register,
     handleSubmit,
@@ -24,10 +25,12 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
+      // Call your zustand store register function
       await registerUser(data.name, data.email, data.password, data.mobileNumber)
       addToast("Account created successfully!", "success")
       router.push("/dashboard")
     } catch (err: any) {
+      console.error(err)
       addToast(err.message || "Registration failed", "error")
     }
   }
