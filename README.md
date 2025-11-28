@@ -1,269 +1,61 @@
-## Getting Started
+# 🌐 Community Portal
 
-First, run the development server:
+[![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)  
+[![Frontend](https://img.shields.io/badge/Frontend-Next.js-blue)](https://nextjs.org/)  
+[![Backend](https://img.shields.io/badge/Backend-Node.js-brightgreen)](https://nodejs.org/)  
+[![Status](https://img.shields.io/badge/Status-Development-orange)]  
 
+A community web app for managing users, posts, and events. Built to demonstrate modern frontend and backend integration, authentication, state management, and performance optimization.
+
+
+## 🔹 Features
+
+<details>
+<summary>Frontend Features</summary>
+
+- **Framework:** Next.js  
+- **User Authentication:** Register, Login, Password Reset  
+- **Dashboard:** View all posts & upcoming events  
+- **Post Management:** Create, edit, delete posts (optional images)  
+- **Event Registration:** Register for events  
+- **State Management:** Efficient handling of user, post, and event states  
+
+</details>
+
+<details>
+<summary>Backend Features</summary>
+
+- **Framework:** Node.js (Express)  
+- **Architecture:** RESTful API  
+- **User Management:** supabase authentication, registration, login  
+- **Posts:** Full CRUD   
+- **Events:** CRUD + 
+- **Notifications:** Email confirmation for event registration  
+- **Security:** Input validation, authentication, authorization  
+- **Performance:** Caching & optimization  
+- **Deployment:** Vercel
+
+</details>
+
+---
+
+## ⚙️ Tech Stack
+| Layer | Technology |
+|-------|------------|
+| Frontend | Next.js, CSS/SCSS |
+| Backend | Node.js, Express |
+| Database | MongoDB / Mongoose /supabase |
+| Authentication | supabase |
+| Notifications | SMTP Email |
+| Deployment | , Vercel|
+
+---
+
+## 🚀 Getting Started
+
+### Clone the Repository
 ```bash
+git clone https://github.com/preciouskuku/community-portal.git
+cd community
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Community
-=======
-# Community Portal
-
-A modern, full-stack community platform built with Next.js 16, featuring user authentication, real-time posts, events management, and a responsive UI. The application integrates Supabase for authentication, MongoDB for data storage, and provides a seamless user experience for community engagement.
-
-## Features
-
-- **User Authentication**: Secure login and registration using Supabase Auth
-- **Post Management**: Create, read, update, and delete community posts
-- **Event Management**: Organize and manage community events
-- **Real-time Updates**: Live updates for posts and events
-- **Responsive Design**: Mobile-first design with Tailwind CSS
-- **Type Safety**: Full TypeScript support
-- **API Routes**: RESTful API endpoints for data operations
-
-## Tech Stack
-
-- **Frontend**: Next.js 16, React 19, TypeScript
-- **Styling**: Tailwind CSS 4
-- **Authentication**: Supabase Auth, NextAuth.js
-- **Database**: MongoDB with Mongoose ODM
-- **State Management**: Zustand
-- **Validation**: Zod
-- **Deployment**: Vercel-ready
-
-## Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- **Node.js**: Version 18.0 or higher (recommended: 20.x)
-- **npm**: Version 8.0 or higher (comes with Node.js)
-- **MongoDB**: Local installation or MongoDB Atlas account
-- **Supabase Account**: For authentication services
-
-## Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd community
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Environment Setup**:
-   Create a `.env.local` file in the root directory and add the following environment variables:
-
-   ```env
-   # Supabase Configuration
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-
-   # MongoDB Configuration
-   MONGO_URI=your_mongodb_connection_string
-
-   # NextAuth Configuration
-   NEXTAUTH_URL=http://localhost:3000
-   NEXTAUTH_SECRET=your_nextauth_secret_key
-
-   # Optional: Analytics
-   VERCEL_ANALYTICS_ID=your_vercel_analytics_id
-   ```
-
-## Database Setup
-
-### MongoDB Setup
-
-1. **Local MongoDB**:
-   - Install MongoDB Community Server
-   - Start MongoDB service
-   - Use connection string: `mongodb://localhost:27017`
-
-2. **MongoDB Atlas**:
-   - Create a free cluster at [MongoDB Atlas](https://www.mongodb.com/atlas)
-   - Get your connection string from the cluster dashboard
-   - Replace `<username>`, `<password>`, and `<cluster>` with your details
-
-### Supabase Setup
-
-1. **Create a Supabase project**:
-   - Go to [supabase.com](https://supabase.com)
-   - Create a new project
-   - Note down your project URL and API keys
-
-2. **Configure Authentication**:
-   - In your Supabase dashboard, go to Authentication > Settings
-   - Configure your site URL and redirect URLs
-   - Enable email authentication if needed
-
-## Running the Application
-
-### Development Mode
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Production Build
-
-Build and start the production server:
-
-```bash
-npm run build
-npm start
-```
-
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint for code quality
-
-## Project Structure
-
-```
-community/
-├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── api/               # API routes
-│   │   ├── auth/              # Authentication pages
-│   │   ├── dashboard/         # User dashboard
-│   │   ├── posts/             # Post management pages
-│   │   ├── events/            # Event management pages
-│   │   ├── layout.tsx         # Root layout
-│   │   └── page.tsx           # Home page
-│   ├── components/            # Reusable components
-│   │   ├── providers/         # Context providers
-│   │   ├── ui/                # UI components
-│   │   └── layout/            # Layout components
-│   ├── hooks/                 # Custom React hooks
-│   ├── lib/                   # Utility libraries
-│   │   ├── supabaseClient.ts  # Supabase client
-│   │   ├── mongodb.ts         # MongoDB connection
-│   │   ├── mongoose.ts        # Mongoose setup
-│   │   └── utils.ts           # Utility functions
-│   ├── model/                 # Database models
-│   │   ├── user.ts            # User model
-│   │   └── post.ts            # Post model
-│   └── state/                 # State management
-│       ├── authStore.ts       # Authentication store
-│       ├── postsStore.ts      # Posts store
-│       └── uiStore.ts         # UI state store
-├── public/                    # Static assets
-├── .env.local                 # Environment variables
-├── package.json               # Dependencies and scripts
-├── tailwind.config.js         # Tailwind CSS configuration
-├── next.config.ts             # Next.js configuration
-└── tsconfig.json              # TypeScript configuration
-```
-
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/[...nextauth]` - NextAuth.js handler
-
-### Posts
-- `GET /api/post` - Get all posts
-- `POST /api/post` - Create a new post
-- `GET /api/post/[id]` - Get post by ID
-- `PUT /api/post/[id]` - Update post
-- `DELETE /api/post/[id]` - Delete post
-
-### Users
-- `GET /api/user` - Get user profile
-- `PUT /api/user` - Update user profile
-
-## Deployment
-
-### Vercel Deployment
-
-1. **Connect to Vercel**:
-   - Push your code to GitHub
-   - Connect your repository to Vercel
-   - Add environment variables in Vercel dashboard
-
-2. **Database Configuration**:
-   - Ensure MongoDB Atlas allows connections from Vercel's IP ranges
-   - Update Supabase site URL to your production domain
-
-### Manual Deployment
-
-1. Build the application:
-   ```bash
-   npm run build
-   ```
-
-2. Start the production server:
-   ```bash
-   npm start
-   ```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Open a pull request
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Build Errors**:
-   - Ensure all environment variables are set
-   - Check Node.js version compatibility
-   - Clear `.next` cache: `rm -rf .next`
-
-2. **Database Connection**:
-   - Verify MongoDB connection string
-   - Check network access to MongoDB Atlas
-   - Ensure Supabase keys are correct
-
-3. **Authentication Issues**:
-   - Verify Supabase project settings
-   - Check redirect URLs in Supabase dashboard
-   - Ensure NextAuth configuration is correct
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-For support, please open an issue in the GitHub repository or contact the development team.
