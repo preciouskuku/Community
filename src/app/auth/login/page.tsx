@@ -6,15 +6,16 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FormInput } from "@/components/ui/form-input"
 import { Spinner } from "@/components/ui/form-components"
 import { loginSchema, type LoginFormData } from "@/lib/validation"
-import { useAuthStore } from "@/state/authStore"
 import { useUIStore } from "@/state/uiStore"
 import { useRouter } from "next/navigation"
-import { signIn } from "next-auth/react"
+import { supabase } from "@/lib/supabaseClient"
+import { useState } from "react"
 
 export default function LoginPage() {
   const router = useRouter()
-  const { login, isLoading } = useAuthStore()
   const { addToast } = useUIStore()
+  const [isLoading, setIsLoading] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -25,37 +26,34 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      await login(data.email, data.password)
-      addToast("Welcome back!", "success")
+      setIsLoading(true)
+      const { data: supaData, error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      })
+
+      setIsLoading(false)
+
+      if (error) throw error
+
+      addToast("Logged in successfully!", "success")
       router.push("/dashboard")
     } catch (err: any) {
+      setIsLoading(false)
+      console.error(err)
       addToast(err.message || "Login failed", "error")
     }
   }
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const result = await signIn("google", { redirect: false })
-      if (result?.error) {
-        addToast("Google sign-in failed", "error")
-      } else {
-        addToast("Welcome!", "success")
-        router.push("/dashboard")
-      }
-    } catch (err: any) {
-      addToast(err.message || "Google login failed", "error")
-    }
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted">
-      <div className="w-full max-w-md space-y-8 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted px-4">
+      <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <div className="h-12 w-12 bg-gradient-to-br from-primary to-accent rounded-lg mx-auto flex items-center justify-center text-primary-foreground font-bold text-lg">
-            C
+            L
           </div>
-          <h1 className="mt-4 text-2xl font-bold">Welcome Back</h1>
-          <p className="text-muted-foreground mt-2">Sign in to your account</p>
+          <h1 className="mt-4 text-2xl font-bold">Sign In</h1>
+          <p className="text-muted-foreground mt-2">Welcome back! Please login to your account</p>
         </div>
 
         <form
@@ -72,12 +70,7 @@ export default function LoginPage() {
           />
 
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium">Password</label>
-              <Link href="/auth/forgot-password" className="text-xs text-primary hover:underline">
-                Forgot?
-              </Link>
-            </div>
+            <label className="text-sm font-medium">Password</label>
             <input
               type="password"
               placeholder="••••••••"
@@ -90,26 +83,17 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
             {isLoading && <Spinner size="sm" />}
             {isLoading ? "Signing in..." : "Sign In"}
           </button>
         </form>
 
-        {/* Google Login Button */}
-        <button
-          type="button"
-          onClick={handleGoogleSignIn}
-          className="w-full py-2 mt-4 bg-red-500 text-white rounded-lg hover:opacity-90 flex items-center justify-center gap-2"
-        >
-          Sign in with Google
-        </button>
-
-        <p className="text-center text-sm text-muted-foreground mt-4">
-          Don't have an account?{" "}
+        <p className="text-center text-sm text-muted-foreground">
+          New here?{" "}
           <Link href="/auth/register" className="text-primary font-semibold hover:underline">
-            Sign up
+            Create an account
           </Link>
         </p>
       </div>

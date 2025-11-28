@@ -6,13 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FormInput } from "@/components/ui/form-input"
 import { Spinner } from "@/components/ui/form-components"
 import { registerSchema, type RegisterFormData } from "@/lib/validation"
-import { useAuthStore } from "@/state/authStore"
 import { useUIStore } from "@/state/uiStore"
 import { useRouter } from "next/navigation"
+import { supabase } from "@/lib/supabaseClient"
 
 export default function RegisterPage() {
   const router = useRouter()
-  const { register: registerUser, isLoading } = useAuthStore()
   const { addToast } = useUIStore()
 
   const {
@@ -25,10 +24,15 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      // Call your zustand store register function
-      await registerUser(data.name, data.email, data.password, data.mobileNumber)
-      addToast("Account created successfully!", "success")
-      router.push("/dashboard")
+      const { data: supaData, error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+      })
+
+      if (error) throw error
+
+      addToast("Account created successfully! Check your email to confirm.", "success")
+      router.push("/auth/login")
     } catch (err: any) {
       console.error(err)
       addToast(err.message || "Registration failed", "error")
@@ -36,8 +40,8 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted">
-      <div className="w-full max-w-md space-y-8 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted px-4">
+      <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <div className="h-12 w-12 bg-gradient-to-br from-primary to-accent rounded-lg mx-auto flex items-center justify-center text-primary-foreground font-bold text-lg">
             R
@@ -90,11 +94,11 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            disabled={isLoading}
-            className="w-full py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
+            disabled={false}
+            className="w-full py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
-            {isLoading && <Spinner size="sm" />}
-            {isLoading ? "Signing up..." : "Sign Up"}
+            <Spinner size="sm" />
+            Sign Up
           </button>
         </form>
 
