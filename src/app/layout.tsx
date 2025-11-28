@@ -1,53 +1,25 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import { ThemeProvider } from "@/components/providers/theme-provider"
-import { ToastContainer } from "@/components/ui/toast-container"
-import { OfflineIndicator } from "@/components/ui/offline-indicator"
-import "./globals.css"
+// src/app/layout.tsx
+import type { ReactNode } from "react";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { ClientProviders } from "@/components/providers/ClientProviders";
+import "./globals.css";
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const _geist = Geist({ subsets: ["latin"] });
+const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Community Portal",
   description: "Connect, share, and collaborate with your community",
-  
-  icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
-  },
-}
+};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`font-sans antialiased`}>
-        <ThemeProvider>
-          {children}
-          <ToastContainer />
-          <OfflineIndicator />
-          <Analytics />
-        </ThemeProvider>
+    <html lang="en">
+      <body className="font-sans antialiased">
+        {/* Only the client wrapper uses context */}
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
-  )
+  );
 }

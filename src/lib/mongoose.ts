@@ -3,11 +3,8 @@ import mongoose from "mongoose";
 
 const MONGO_URI = "mongodb+srv://preciouskmutema_db_user:pass12345@cluster0.tda6mdu.mongodb.net/CommunityPortal?retryWrites=true&w=majority";
 
-if (!MONGO_URI) {
-  throw new Error("Please define the MONGO_URI environment variable inside .env.local");
-}
+if (!MONGO_URI) throw new Error("MONGO_URI not defined");
 
-// Global variable to cache the connection
 let cached = (global as any).mongoose;
 
 if (!cached) {
@@ -15,18 +12,10 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
-  if (cached.conn) {
-    return cached.conn;
-  }
+  if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGO_URI, opts).then((mongoose) => {
-      return mongoose;
-    });
+    cached.promise = mongoose.connect(MONGO_URI, { bufferCommands: false }).then((mongoose) => mongoose);
   }
 
   cached.conn = await cached.promise;

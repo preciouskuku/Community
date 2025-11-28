@@ -1,4 +1,5 @@
 "use client"
+
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -8,6 +9,7 @@ import { loginSchema, type LoginFormData } from "@/lib/validation"
 import { useAuthStore } from "@/state/authStore"
 import { useUIStore } from "@/state/uiStore"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -28,6 +30,20 @@ export default function LoginPage() {
       router.push("/dashboard")
     } catch (err: any) {
       addToast(err.message || "Login failed", "error")
+    }
+  }
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signIn("google", { redirect: false })
+      if (result?.error) {
+        addToast("Google sign-in failed", "error")
+      } else {
+        addToast("Welcome!", "success")
+        router.push("/dashboard")
+      }
+    } catch (err: any) {
+      addToast(err.message || "Google login failed", "error")
     }
   }
 
@@ -81,7 +97,16 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-muted-foreground">
+        {/* Google Login Button */}
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="w-full py-2 mt-4 bg-red-500 text-white rounded-lg hover:opacity-90 flex items-center justify-center gap-2"
+        >
+          Sign in with Google
+        </button>
+
+        <p className="text-center text-sm text-muted-foreground mt-4">
           Don't have an account?{" "}
           <Link href="/auth/register" className="text-primary font-semibold hover:underline">
             Sign up
