@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useAuthStore } from "@/state/authStore"
+import { Menu } from "lucide-react" // Using a simple icon from lucide-react (or similar)
 
 interface NavbarProps {
   onMenuClick?: () => void
@@ -11,43 +12,78 @@ export function Navbar({ onMenuClick }: NavbarProps) {
   const { user, logout } = useAuthStore()
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 shadow-sm">
-      <div className="flex h-16 items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg hover:opacity-80 transition-opacity">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-accent text-primary-foreground flex items-center justify-center font-bold text-sm">
-            C
-          </div>
-          <span className="hidden sm:inline">Community</span>
+    // 1. Clearer background, minimal shadow, fixed height
+    <nav className="sticky top-0 z-40 w-full bg-white border-b border-gray-100 shadow-md">
+      <div className="flex h-20 items-center justify-between container mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Logo/Brand - Using Meetup-like color for the main text */}
+        <Link href="/" className="flex items-center gap-2 font-bold text-2xl text-[#004A55] hover:opacity-90 transition-opacity">
+          {/* Replaced the 'C' with a simple icon/placeholder to represent a logo */}
+          <svg className="w-8 h-8 text-[#ED1C4C]" fill="currentColor" viewBox="0 0 24 24">
+             <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4 11h-3v3c0 .552-.448 1-1 1s-1-.448-1-1v-3H8c-.552 0-1-.448-1-1s.448-1 1-1h3V8c0-.552.448-1 1-1s1 .448 1 1v3h3c.552 0 1 .448 1 1s-.448 1-1 1z"/>
+          </svg>
+          Community
         </Link>
 
-        <div className="flex items-center gap-6">
-          <Link href="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">
-            Dashboard
-          </Link>
-          <Link href="/posts" className="text-sm font-medium hover:text-primary transition-colors">
-            Posts
-          </Link>
-          <Link href="/events" className="text-sm font-medium hover:text-primary transition-colors">
-            Events
-          </Link>
-          {user ? (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground hidden sm:inline">{user.name}</span>
-              <button onClick={logout} className="text-sm font-medium hover:text-primary transition-colors">
-                Logout
-              </button>
-            </div>
-          ) : (
-            <Link href="/auth/login" className="text-sm font-medium hover:text-primary transition-colors">
-              Sign In
-            </Link>
-          )}
+        {/* Main Navigation and Auth Links */}
+        <div className="flex items-center gap-4 sm:gap-6">
+          
+          {/* Primary Navigation Links (Hidden on small screens for cleaner mobile) */}
+          <div className="hidden md:flex items-center gap-6">
+             <Link href="/dashboard" className="text-base font-medium text-gray-700 hover:text-[#ED1C4C] transition-colors">
+               Explore
+             </Link>
+             <Link href="/posts" className="text-base font-medium text-gray-700 hover:text-[#ED1C4C] transition-colors">
+               Start a Group
+             </Link>
+             <Link href="/events" className="text-base font-medium text-gray-700 hover:text-[#ED1C4C] transition-colors">
+               Events
+             </Link>
+          </div>
+          
+          <div className="flex items-center gap-3 sm:gap-4">
+            {user ? (
+              // Authenticated View
+              <div className="flex items-center gap-4">
+                <span className="text-base text-gray-600 hidden lg:inline font-medium">Hi, {user.name}</span>
+                {/* Logout as a simple link */}
+                <button 
+                  onClick={logout} 
+                  className="px-4 py-2 text-sm font-semibold border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors hidden sm:block"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              // Unauthenticated View
+              <>
+                {/* Simple Sign In link */}
+                <Link 
+                  href="/auth/login" 
+                  className="text-base font-medium text-[#004A55] hover:text-[#ED1C4C] transition-colors hidden sm:block"
+                >
+                  Log in
+                </Link>
+                {/* Prominent Sign Up CTA (Button Style) */}
+                <Link
+                  href="/auth/signup" // Assuming you have a signup path
+                  className="px-5 py-2 bg-[#ED1C4C] text-white font-semibold rounded-lg shadow-md hover:bg-[#D51842] transition-colors text-base"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
         </div>
 
-        <button onClick={onMenuClick} className="sm:hidden p-2 rounded-md hover:bg-muted transition-colors">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+        {/* Mobile Menu Button */}
+        <button 
+          onClick={onMenuClick} 
+          className="p-2 rounded-md hover:bg-gray-100 transition-colors md:hidden text-[#004A55]"
+          aria-label="Toggle menu"
+        >
+           {/* Using lucide-react's Menu icon for clarity */}
+           <Menu className="w-6 h-6" /> 
         </button>
       </div>
     </nav>

@@ -123,3 +123,72 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom media queries for enhanced mobile responsiveness */
+@media (max-width: 479px) {
+  /* Very small mobiles: Adjust font sizes for better readability */
+  h1 {
+    font-size: 2.5rem !important; /* Reduce from text-5xl */
+    line-height: 1.2 !important;
+  }
+
+  h2 {
+    font-size: 1.875rem !important; /* Reduce from text-3xl */
+  }
+
+  p {
+    font-size: 1rem !important; /* Ensure readable text */
+  }
+
+  /* Adjust button sizes and padding */
+  button, a {
+    padding: 0.75rem 1.5rem !important; /* Smaller padding for touch */
+    font-size: 0.875rem !important;
+  }
+
+  /* Container padding adjustments */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Grid adjustments for single column on very small screens */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Flex adjustments for stacking */
+  .flex {
+    flex-direction: column !important;
+  }
+
+  /* Specific adjustments for hero section */
+  .hero-text {
+    text-align: center !important;
+  }
+
+  /* Navbar adjustments */
+  nav .flex {
+    gap: 0.5rem !important;
+  }
+
+  nav a, nav button {
+    font-size: 0.875rem !important;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 639px) {
+  /* Small mobiles: Fine-tune for 480px to 639px */
+  h1 {
+    font-size: 3rem !important;
+  }
+
+  h2 {
+    font-size: 2rem !important;
+  }
+
+  /* Ensure buttons are touch-friendly */
+  button, a {
+    min-height: 44px !important; /* iOS touch target */
+  }
+}
