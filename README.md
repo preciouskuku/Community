@@ -55,7 +55,7 @@ A community web app for managing users, posts, and events. Built to demonstrate 
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/preciouskuku/community-portal.git
+git clone https://github.com/preciouskuku/Community.git
 cd community
 npm install
 npm run dev
