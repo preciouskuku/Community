@@ -1,11 +1,15 @@
-// src/lib/models/User.ts
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  image: String,
-  createdAt: { type: Date, default: Date.now },
-});
+const UserSchema = new mongoose.Schema(
+  {
+    supabaseId: { type: String, required: true, unique: true },
+    name: String,
+    email: { type: String, required: true, unique: true },
+    mobileNumber: String,
+    avatar: String,
+    role: { type: String, default: "user" },
+  },
+  { timestamps: true }
+);
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
